@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dylan Weddle Financial Analysis - interactive investment risk and performance calculators." />
+  <title>Dylan Weddle Financial Analysis</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="#home" data-page-link="home">Dylan Weddle Financial Analysis</a>
+      <button class="menu-button" id="menuButton" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <nav id="mainNav" aria-label="Main navigation">
+        <a href="#home" data-page-link="home" class="active">Home</a>
+        <a href="#about" data-page-link="about">About</a>
+        <a href="#analysis" data-page-link="analysis">Financial Analysis</a>
+        <a href="#contact" data-page-link="contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="page active-page">
+      <div class="hero">
+        <div class="container hero-grid">
+          <div>
+            <span class="eyebrow">Finance Project</span>
+            <h1>Financial Analysis Made Simple</h1>
+            <p class="lead">
+              This website calculates common investment risk and performance measures using user-entered financial data.
+              It is designed to make each formula clear, repeatable, and easy to verify.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#analysis" data-page-link="analysis">Open Financial Analysis</a>
+              <a class="button secondary" href="#about" data-page-link="about">About This Project</a>
+            </div>
+          </div>
+          <div class="summary-card">
+            <h2>Included Measures</h2>
+            <ul class="feature-list">
+              <li>Holding-Period Return</li>
+              <li>Annualized Return</li>
+              <li>Stock Beta</li>
+              <li>Sharpe Ratio</li>
+              <li>Correlation</li>
+            </ul>
+            <p class="small">All calculations are performed directly in your browser with JavaScript.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">Purpose</span>
+          <h2>What this website does</h2>
+        </div>
+        <div class="info-grid">
+          <article class="info-card">
+            <h3>Performance</h3>
+            <p>Measure investment gains using holding-period and annualized returns.</p>
+          </article>
+          <article class="info-card">
+            <h3>Risk</h3>
+            <p>Estimate systematic risk with beta and risk-adjusted performance with the Sharpe ratio.</p>
+          </article>
+          <article class="info-card">
+            <h3>Relationships</h3>
+            <p>Measure how strongly two assets move together using correlation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="page">
+      <div class="container section narrow">
+        <div class="section-heading">
+          <span class="eyebrow">About</span>
+          <h1>About the Project</h1>
+        </div>
+        <div class="content-card">
+          <h2>Dylan Weddle</h2>
+          <p>
+            I am a Finance student at Rogers State University. I created this website as an AI-assisted finance project
+            to demonstrate how common financial calculations can be performed in an interactive web application.
+          </p>
+          <p>
+            The project combines finance concepts with HTML, CSS, and JavaScript. AI was used to help plan the site,
+            write and review the code, troubleshoot the calculators, and verify the financial formulas.
+          </p>
+          <p>
+            The goal is to provide simple tools that clearly show both the inputs and results for several widely used
+            investment measures.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="analysis" class="page">
+      <div class="container section">
+        <div class="section-heading">
+          <span class="eyebrow">Calculators</span>
+          <h1>Financial Analysis</h1>
+          <p>Enter values below and select Calculate. Percent inputs should be entered as normal percentages, such as 8 for 8%.</p>
+        </div>
+
+        <div class="calculator-grid">
+          <article class="calculator-card">
+            <div class="card-top">
+              <span class="number">01</span>
+              <div>
+                <h2>Holding-Period Return</h2>
+                <p class="formula">HPR = (Ending Price − Beginning Price + Dividends) ÷ Beginning Price</p>
+              </div>
+            </div>
+            <label>Beginning Price ($)
+              <input id="hprBegin" type="number" step="any" value="100" />
+            </label>
+            <label>Ending Price ($)
+              <input id="hprEnd" type="number" step="any" value="115" />
+            </label>
+            <label>Dividends Received ($)
+              <input id="hprDividend" type="number" step="any" value="2" />
+            </label>
+            <button class="calc-button" onclick="calculateHPR()">Calculate HPR</button>
+            <div class="result" id="hprResult" aria-live="polite">Result will appear here.</div>
+          </article>
+
+          <article class="calculator-card">
+            <div class="card-top">
+              <span class="number">02</span>
+              <div>
+                <h2>Annualized Return</h2>
+                <p class="formula">Annualized Return = (1 + HPR)<sup>365 ÷ Days Held</sup> − 1</p>
+              </div>
+            </div>
+            <label>Holding-Period Return (%)
+              <input id="annualHpr" type="number" step="any" value="17" />
+            </label>
+            <label>Days Held
+              <input id="annualDays" type="number" step="1" min="1" value="180" />
+            </label>
+            <button class="calc-button" onclick="calculateAnnualized()">Calculate Annualized Return</button>
+            <div class="result" id="annualResult" aria-live="polite">Result will appear here.</div>
+          </article>
+
+          <article class="calculator-card">
+            <div class="card-top">
+              <span class="number">03</span>
+              <div>
+                <h2>Stock Beta</h2>
+                <p class="formula">Beta = Covariance(Stock, Market) ÷ Variance(Market)</p>
+              </div>
+            </div>
+            <label>Stock Returns (%), comma-separated
+              <textarea id="betaStock" rows="3">2, 4, -1, 3, 5</textarea>
+            </label>
+            <label>Market Returns (%), comma-separated
+              <textarea id="betaMarket" rows="3">1, 2, -1, 2, 3</textarea>
+            </label>
+            <button class="calc-button" onclick="calculateBeta()">Calculate Beta</button>
+            <div class="result" id="betaResult" aria-live="polite">Result will appear here.</div>
+          </article>
+
+          <article class="calculator-card">
+            <div class="card-top">
+              <span class="number">04</span>
+              <div>
+                <h2>Sharpe Ratio</h2>
+                <p class="formula">Sharpe Ratio = (Portfolio Return − Risk-Free Rate) ÷ Portfolio Volatility</p>
+              </div>
+            </div>
+            <label>Annual Portfolio Return (%)
+              <input id="sharpeReturn" type="number" step="any" value="12" />
+            </label>
+            <label>Annual Risk-Free Rate (%)
+              <input id="sharpeRf" type="number" step="any" value="4" />
+            </label>
+            <label>Annual Portfolio Volatility (%)
+              <input id="sharpeVol" type="number" step="any" value="10" />
+            </label>
+            <button class="calc-button" onclick="calculateSharpe()">Calculate Sharpe Ratio</button>
+            <div class="result" id="sharpeResult" aria-live="polite">Result will appear here.</div>
+          </article>
+
+          <article class="calculator-card">
+            <div class="card-top">
+              <span class="number">05</span>
+              <div>
+                <h2>Correlation</h2>
+                <p class="formula">Correlation = Covariance(X, Y) ÷ (Standard Deviation X × Standard Deviation Y)</p>
+              </div>
+            </div>
+            <label>Asset A Returns (%), comma-separated
+              <textarea id="corrA" rows="3">1, 3, 2, 5, 4</textarea>
+            </label>
+            <label>Asset B Returns (%), comma-separated
+              <textarea id="corrB" rows="3">2, 5, 1, 6, 3</textarea>
+            </label>
+            <button class="calc-button" onclick="calculateCorrelation()">Calculate Correlation</button>
+            <div class="result" id="corrResult" aria-live="polite">Result will appear here.</div>
+          </article>
+        </div>
+
+        <div class="method-note">
+          <h2>Calculation Notes</h2>
+          <p>
+            Beta and correlation require equal-length return series. Percentage returns can be entered as values such as
+            2, 4, and -1 to represent 2%, 4%, and -1%. For beta, using percentage values or decimals produces the same beta
+            because the common scaling factor cancels in covariance divided by variance.
+          </p>
+          <p>
+            The Sharpe ratio calculator expects annual return, annual risk-free rate, and annual volatility measured over
+            the same annual period.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="page">
+      <div class="container section narrow">
+        <div class="section-heading">
+          <span class="eyebrow">Contact</span>
+          <h1>Contact Information</h1>
+        </div>
+        <div class="content-card">
+          <h2>Dylan Weddle</h2>
+          <p><strong>School:</strong> Rogers State University</p>
+          <p><strong>Area of Study:</strong> Business Administration – Finance</p>
+          <p><strong>Email:</strong> sddylanweddle@student.rsu.edu</p>
+          <p class="small">
+            This site is an academic project and is intended for educational purposes only. It does not provide investment advice.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-wrap">
+      <p>© <span id="year"></span> Dylan Weddle Financial Analysis</p>
+      <p>Academic finance project • Built with AI assistance</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
